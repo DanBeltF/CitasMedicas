@@ -1,4 +1,4 @@
-/*
+ /*
  * Copyright (C) 2015 hcadavid
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,7 +31,8 @@ public class Consulta {
     private Date fechayHora;
     private String resumen;
     private long costo;
-
+    private Paciente pacientesId;
+    private Paciente pacientesTipoId;
     
     
     public Consulta(Date fechayHora, String resumen,long costo) {        
@@ -74,8 +75,24 @@ public class Consulta {
     public void setCosto(long costo) {
         this.costo = costo;
     }
+
+    public Paciente getPacientesId() {
+        return pacientesId;
+    }
+
+    public void setPacientesId(Paciente pacientesId) {
+        this.pacientesId = pacientesId;
+    }
+
+    public Paciente getPacientesTipoId() {
+        return pacientesTipoId;
+    }
+
+    public void setPacientesTipoId(Paciente pacientesTipoId) {
+        this.pacientesTipoId = pacientesTipoId;
+    }
     
-    
+        
 
     @Override
     public String toString() {

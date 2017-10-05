@@ -6,7 +6,7 @@
   
 <mapper namespace="edu.eci.pdsw.persistence.impl.mappers.PacienteMapper">
     
-
+    
         
     <select parameterType="map" id="loadPacienteByID" resultMap="PacienteResult">
 
@@ -33,6 +33,14 @@
         FROM  CM_PACIENTES as p left join CM_CONSULTAS as c on p.id=c.PACIENTES_id left join CM_EPS as e on p.eps_nit=e.nit
     </select>
     
-
+    <resultMap type='Paciente' id='PacienteResult'>
+        <id property='id' column='id'/>
+        <id property='tipoId' column='tipo_id'/>
+        <result property='nombre' column='nombre'/>
+        <result property='fechaNacimiento' column='fecha_nacimiento'/>  
+        <collection property='consultas' ofType='Consulta' columnPrefix='consultas_'></collection>
+        <association property="eps" javaType="Eps" columnPrefix='eps_'></association>
+    </resultMap>
+    
                 
 </mapper>

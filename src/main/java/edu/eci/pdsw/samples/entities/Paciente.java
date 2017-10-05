@@ -19,7 +19,7 @@ package edu.eci.pdsw.samples.entities;
 
 import java.sql.Date;
 import java.util.LinkedHashSet;
-import java.util.Objects;
+import java.util.Objects;   
 import java.util.Set;
 
 /**
@@ -41,7 +41,7 @@ public class Paciente {
         this.tipoId = tipoid;
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
-        consultas=new LinkedHashSet<>();
+        consultas=new LinkedHashSet<>() ;
         this.eps=eps;
     }
 
