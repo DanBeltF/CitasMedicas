@@ -6,6 +6,9 @@ import edu.eci.pdsw.samples.entities.Consulta;
 import edu.eci.pdsw.samples.entities.Paciente;
 import java.util.Date;
 
+import org.apache.ibatis.annotations.Param;
+
+
 import java.util.List;
 
 /**
@@ -14,12 +17,11 @@ import java.util.List;
  */
 public interface PacienteMapper {
         
-    public Paciente loadPacienteById(int id,String tipoid);
-    
+    public Paciente loadPacienteById(@Param("id") int id,@Param("tipo_id")String tipoid);
+        
     public List<Paciente> loadPacientes();
     
-    public void insertarPaciente(Paciente p);
+    public void insertarPaciente(@Param("pac") Paciente p);
     
-    public void insertConsulta(Consulta con,int idPaciente, String tipoid,int costoconsulta);
-
+    public void insertConsulta(@Param("con") Consulta con,@Param("idp") int idPaciente,@Param("tipoidp") String tipoid,@Param("costoc") int costoconsulta);
 }

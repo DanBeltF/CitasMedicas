@@ -6,10 +6,13 @@
 package edu.eci.pdsw.samples.simpleview;
 
 import edu.eci.pdsw.persistence.impl.mappers.PacienteMapper;
+import edu.eci.pdsw.samples.entities.Eps;
 import edu.eci.pdsw.samples.entities.Paciente;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -42,16 +45,24 @@ public class MyBATISExample {
     }
 
     /**
-     * Programa principal de ejempo de uso de MyBATIS
+     * Programa principal de ejemplo de uso de MyBATIS
      * @param args
      * @throws SQLException 
      */
     public static void main(String args[]) throws SQLException {
         SqlSessionFactory sessionfact = getSqlSessionFactory();
         SqlSession sqlss = sessionfact.openSession();
-        ClientMapper cm = sqlss.getMapper(PacienteMapper.class);
-        System.out.println(cm.loadPacientes()));
-    }
+        PacienteMapper pmapper=sqlss.getMapper(PacienteMapper.class);
+        //List<Paciente> pacientes=pmapper.loadPacientes();
+        //for (Paciente p:pacientes){
+            //System.out.println(p.getNombre());
+        //Paciente paciente =pmapper.loadPacienteById(1026585446, "CC");
+        //System.out.println(paciente.getNombre());
+        Paciente b= new Paciente(5555,"CC", "Dan B", (java.sql.Date) new Date(2001, 01, 01), new Eps("Coomeva","8456984"));
+        pmapper.insertarPaciente(b);
+        }
+        
+    
 
     /**
      * Registra un nuevo paciente y sus respectivas consultas (si existiesen).

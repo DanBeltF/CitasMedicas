@@ -6,10 +6,36 @@
   
 <mapper namespace="edu.eci.pdsw.persistence.impl.mappers.PacienteMapper">
     
+    <insert id="insertConsulta" useGeneratedKeys="true" keyProperty="con.id">
+	COMPLETAR
+    </insert>
     
+    <insert parameterType="map" id="insertPaciente">
+	insert into CM_PACIENTES(id, tipo_id, nombre, fecha_nacimiento, EPS_nit) values(#{pac})
+    </insert>
         
-    <select parameterType="map" id="loadPacienteByID" resultMap="PacienteResult">
+    <select parameterType="map" id="loadPacienteById" resultMap="PacienteResult">
+        select
+    
+        p.id,
+        p.tipo_id,
+        p.nombre,
+        p.fecha_nacimiento,
 
+
+        e.nombre as eps_nombre,
+        e.nit,
+
+        c.idCONSULTAS,
+        c.fecha_y_hora,
+        c.resumen,
+        c.costo
+
+        FROM  CM_PACIENTES as p left join CM_CONSULTAS as c on p.id=c.PACIENTES_id left join CM_EPS as e on p.eps_nit=e.nit
+        
+        where p.id = #{id} and p.tipo_id = #{tipo_id}
+        
+        
     </select>
     
        
@@ -22,7 +48,7 @@
         p.fecha_nacimiento,
 
 
-        e.nombre,
+        e.nombre as eps_nombre,
         e.nit,
 
         c.idCONSULTAS,
@@ -37,10 +63,23 @@
         <id property='id' column='id'/>
         <id property='tipoId' column='tipo_id'/>
         <result property='nombre' column='nombre'/>
-        <result property='fechaNacimiento' column='fecha_nacimiento'/>  
-        <collection property='consultas' ofType='Consulta' columnPrefix='consultas_'></collection>
-        <association property="eps" javaType="Eps" columnPrefix='eps_'></association>
+        <result property='fechaNacimiento' column='fecha_nacimiento'/>
+        <association property="eps" javaType="Eps" resultMap="EpsResult" columnPrefix="eps_"></association>
+        <collection property='consultas' ofType='Consulta' resultMap="ConsultaResult"></collection>
+        
     </resultMap>
     
+    <resultMap type='Eps' id='EpsResult'>
+        <id property='nit' column='nit'/>
+        <result property='nombre' column='nombre'/>
+    </resultMap>
+    
+    <resultMap type='Consulta' id='ConsultaResult'>
+        <id property='id' column='idCONSULTAS'/>
+        <result property='fechayHora' column='fecha_y_hora'/>
+        <result property='resumen' column='resumen'/>
+        <result property='costo' column='costo'/>
+       
+    </resultMap>
                 
 </mapper>
