@@ -6,12 +6,20 @@
   
 <mapper namespace="edu.eci.pdsw.persistence.impl.mappers.PacienteMapper">
     
+    <update id="actualizarPaciente">
+            update CM_PACIENTES
+            set nombre = "watchmaker"  
+            where id = #{acpac.id}       
+    </update>
+    
     <insert id="insertConsulta" useGeneratedKeys="true" keyProperty="con.id">
-	COMPLETAR
+	insert into CM_CONSULTAS (idCONSULTAS, fecha_y_hora, resumen, costo, PACIENTES_id, PACIENTES_tipo_id)
+        values(#{con.id}, #{con.fechayHora}, #{con.resumen}, #{costoc}, #{idp}, #{tipoidp})
     </insert>
     
-    <insert parameterType="map" id="insertPaciente">
-	insert into CM_PACIENTES(id, tipo_id, nombre, fecha_nacimiento, EPS_nit) values(#{pac})
+    <insert parameterType="map" id="insertarPaciente">
+	insert into CM_PACIENTES(id, tipo_id, nombre, fecha_nacimiento, EPS_nit) 
+        values (#{pac.id}, #{pac.tipoId}, #{pac.nombre}, #{pac.fechaNacimiento}, #{pac.eps.nit})
     </insert>
         
     <select parameterType="map" id="loadPacienteById" resultMap="PacienteResult">
@@ -70,8 +78,8 @@
     </resultMap>
     
     <resultMap type='Eps' id='EpsResult'>
-        <id property='nit' column='nit'/>
-        <result property='nombre' column='nombre'/>
+        <id property='nombre' column='nombre'/>
+        <result property='nit' column='nit'/>
     </resultMap>
     
     <resultMap type='Consulta' id='ConsultaResult'>
